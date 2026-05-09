@@ -1,0 +1,2770 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mandé Multi Services - Études à l'étranger (Inde, Russie), visas, services médicaux, intermédiation commerciale. Votre passerelle internationale de confiance.">
+    <title>Mandé Multi Services - Votre passerelle internationale</title>
+    
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("EG3XgGTvwTJ78tarW");
+        })();
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --secondary: #f59e0b;
+            --secondary-dark: #d97706;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Loader - Durée réduite à 0.5s */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.3s ease 0.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-content h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .loader-content p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            display: none;
+        }
+
+        .custom-cursor.active {
+            transform: scale(1.5);
+            background: rgba(30, 64, 175, 0.2);
+        }
+
+        @media (min-width: 1024px) {
+            .custom-cursor {
+                display: block;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+            padding: 0.5rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .logo-img {
+            width: 45px;
+            height: 45px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .logo-text h1 {
+            font-size: 1.15rem;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .burger span {
+            width: 28px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: movePattern 30s linear infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        @keyframes movePattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .flags {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            animation: fadeInUp 1s ease 0.4s backwards;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.8s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--white);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 4rem;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(30,64,175,0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .service-card:hover::after {
+            width: 400px;
+            height: 400px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(30,64,175,0.3);
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .country-flags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--white);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            border-radius: 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--light);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 120px;
+            color: rgba(30,64,175,0.05);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        .testimonial-info h4 {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .testimonial-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .testimonial-text {
+            color: var(--gray);
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        /* Partners Carousel */
+        .partners-section {
+            background: var(--light);
+            padding: 4rem 2rem;
+        }
+
+        .partners-carousel {
+            overflow: hidden;
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        .partners-track {
+            display: flex;
+            gap: 3rem;
+            animation: scroll 30s linear infinite;
+        }
+
+        .partner-logo {
+            flex-shrink: 0;
+            width: 180px;
+            height: 100px;
+            background: white;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .partners-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            background: var(--white);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            border: 2px solid var(--primary);
+            background: var(--white);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(30,64,175,0.1), rgba(245,158,11,0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .gallery-content {
+            padding: 1.5rem;
+        }
+
+        .gallery-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-student {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .badge-partner {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .gallery-content h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .gallery-content p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .gallery-controls {
+            text-align: center;
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Blog Section */
+        .blog-section {
+            background: var(--light);
+            padding: 6rem 2rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-date {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .blog-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .blog-link {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-link:hover {
+            color: var(--secondary);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--white);
+            padding: 6rem 2rem;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--light);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(30,64,175,0.05);
+        }
+
+        .faq-question.active {
+            color: var(--primary);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 2rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 0 2rem 1.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .contact .section-title,
+        .contact .section-subtitle {
+            color: var(--white);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        .social-link.facebook:hover {
+            background: #1877f2;
+        }
+
+        .social-link.tiktok:hover {
+            background: #000000;
+        }
+
+        .social-link.whatsapp:hover {
+            background: #25d366;
+        }
+
+        .social-link.instagram:hover {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: var(--white);
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+        }
+
+        .footer-text h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-text p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            font-size: 1.5rem;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+            font-size: 2rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: -400px;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 320px;
+            transition: right 0.4s ease;
+        }
+
+        .toast.show {
+            right: 2rem;
+        }
+
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            background: #10b981;
+            color: white;
+        }
+
+        .toast-content h4 {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-content p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .toast-close {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-left: auto;
+        }
+
+        /* Appointment Float Button */
+        .appointment-float {
+            position: fixed;
+            bottom: 100px;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+            z-index: 998;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .appointment-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.6);
+        }
+
+        .appointment-float svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .appointment-float::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--secondary);
+            animation: pulse-ring 2s infinite;
+        }
+
+        .appointment-float svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: var(--secondary);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            color: var(--dark);
+        }
+
+        .lightbox-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-prev {
+            left: 2rem;
+        }
+
+        .lightbox-next {
+            right: 2rem;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Appointment Modal */
+        .appointment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .appointment-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .appointment-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .appointment-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 35px;
+            height: 35px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .appointment-close:hover {
+            background: var(--secondary);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .appointment-content h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .appointment-content p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .appointment-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Amélioration des images pour le lightbox */
+        .gallery-image {
+            cursor: zoom-in;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        /* Responsive pour appointment button */
+        @media (max-width: 768px) {
+            .appointment-float {
+                right: 1rem;
+                bottom: 90px;
+            }
+
+            .appointment-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .appointment-form .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .lightbox-prev {
+                left: 0.5rem;
+            }
+
+            .lightbox-next {
+                right: 0.5rem;
+            }
+        }
+
+        /* Amélioration des transitions de hover */
+        
+        /* Animation d'entrée pour les sections */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Amélioration des transitions de hover */
+        .service-card,
+        .testimonial-card,
+        .gallery-item,
+        .blog-card {
+            will-change: transform;
+        }
+
+        /* Meilleure lisibilité des textes */
+        p {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Amélioration du formulaire de contact */
+        .form-group input:valid,
+        .form-group select:valid,
+        .form-group textarea:valid {
+            border-color: #10b981;
+        }
+
+        /* Animation de pulse pour le bouton WhatsApp */
+        .whatsapp-float::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #25D366;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .whatsapp-float svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Amélioration de la barre de progression */
+        .scroll-progress {
+            box-shadow: 0 0 10px rgba(30, 64, 175, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .burger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 80px;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+                gap: 0;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                padding: 1rem 0;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h2>Mandé Multi Services</h2>
+            <p>Chargement en cours...</p>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="Images/Logo.jpg" alt="Mandé Multi Services" class="logo-img">
+                <div class="logo-text">
+                    <h1>Mandé Multi Services</h1>
+                    <p>Votre passerelle internationale</p>
+                </div>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#realisations">Réalisations</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <div class="flags">
+                <span>🇲🇱</span>
+                <span>🇮🇳</span>
+                <span>🇷🇺</span>
+            </div>
+            <h2>Mandé Multi Services</h2>
+            <p>Étudier, voyager, commercer et se soigner en toute confiance</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary"><span>Nous contacter</span></a>
+                <a href="#services" class="btn btn-secondary"><span>Découvrir nos services</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Nos Services</h2>
+            <p class="section-subtitle">Des solutions professionnelles pour tous vos besoins internationaux</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📚</div>
+                    <h3>Études à l'étranger</h3>
+                    <div class="country-flags">
+                        <span>🇮🇳</span>
+                        <span>🇷🇺</span>
+                    </div>
+                    <p>Nous facilitons votre admission dans les meilleures universités en Inde et en Russie avec un accompagnement personnalisé.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📄</div>
+                    <h3>Visa électronique</h3>
+                    <div class="country-flags">
+                        <span>🇮🇳</span>
+                        <span>🇦🇪</span>
+                        <span>🇹🇭</span>
+                    </div>
+                    <p>Obtention rapide de visas électroniques pour plusieurs destinations asiatiques en toute simplicité.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💬</div>
+                    <h3>Apprentissage de l'anglais</h3>
+                    <p>Cours d'anglais en ligne et en présentiel adaptés à tous les niveaux, pour votre réussite professionnelle.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">❤️</div>
+                    <h3>Services médicaux en Inde</h3>
+                    <div class="country-flags">
+                        <span>🇮🇳</span>
+                    </div>
+                    <p>Accès aux meilleurs hôpitaux et spécialistes médicaux en Inde avec assistance complète.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>Intermédiation commerciale</h3>
+                    <div class="country-flags">
+                        <span>🇮🇳</span>
+                        <span>🇲🇱</span>
+                    </div>
+                    <p>Facilitation des échanges commerciaux entre l'Inde et le Mali pour développer vos affaires.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Graphisme & Design</h3>
+                    <p>Services professionnels de conception graphique pour donner vie à vos projets créatifs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="apropos">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="Images/Logo.jpg" alt="Mandé Multi Services">
+                </div>
+                <div class="about-text">
+                    <h2>À propos de nous</h2>
+                    <p>Mandé Multi Services accompagne les étudiants, voyageurs et entrepreneurs vers de nouvelles opportunités à l'étranger depuis plusieurs années.</p>
+                    <p>Grâce à nos partenariats solides en Inde, en Russie et au Mali, nous offrons des services fiables et rapides dans l'éducation, le voyage, la santé et le commerce.</p>
+                    <p>Notre mission est de faciliter vos projets internationaux en vous offrant un accompagnement personnalisé, professionnel et transparent à chaque étape de votre parcours.</p>
+                </div>
+            </div>
+            
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="500">0</span><span class="stat-number">+</span>
+                        <p class="stat-label">Étudiants accompagnés</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="10">0</span><span class="stat-number">+</span>
+                        <p class="stat-label">Années d'expérience</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="15">0</span><span class="stat-number">+</span>
+                        <p class="stat-label">Pays partenaires</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="98">0</span><span class="stat-number">%</span>
+                        <p class="stat-label">Taux de satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Carousel -->
+    <section class="partners-section">
+        <div class="container">
+            <h2 class="section-title">Nos Partenaires</h2>
+            <p class="section-subtitle">Des collaborations de confiance avec les meilleures institutions</p>
+            <div class="partners-carousel">
+                <div class="partners-track">
+                    <div class="partner-logo">🎓 Chandigarh University</div>
+                    <div class="partner-logo">🏥 Apollo Hospitals</div>
+                    <div class="partner-logo">⚡ Future Energy</div>
+                    <div class="partner-logo">🛢️ Taurus Petroleums</div>
+                    <div class="partner-logo">🍬 Al Kamal Confectionery</div>
+                    <div class="partner-logo">🔋 Lithium Power</div>
+                    <div class="partner-logo">🎓 Chandigarh University</div>
+                    <div class="partner-logo">🏥 Apollo Hospitals</div>
+                    <div class="partner-logo">⚡ Future Energy</div>
+                    <div class="partner-logo">🛢️ Taurus Petroleums</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="temoignages">
+        <div class="container">
+            <h2 class="section-title">Témoignages</h2>
+            <p class="section-subtitle">Ce que nos clients disent de nous</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="Images/CU13.jpg" alt="Souleymane Doumbia" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Souleymane Doumbia</h4>
+                            <p>Étudiant en Inde</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Grâce à Mandé Multi Services, j'ai pu intégrer une excellente université en Inde. Leur accompagnement a été précieux tout au long du processus."</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Moussa Keita" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Moussa Keita</h4>
+                            <p>Entrepreneur</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Le service d'intermédiation commerciale m'a permis d'établir des contacts fiables en Inde pour mon entreprise. Je recommande vivement !"</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Fatoumata Traoré" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Fatoumata Traoré</h4>
+                            <p>Touriste</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"J'ai obtenu mon visa électronique pour Dubaï en seulement 3 jours grâce à Mandé Multi Services. Un service rapide et professionnel."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="realisations">
+        <div class="container">
+            <h2 class="section-title">Nos Réalisations</h2>
+            <p class="section-subtitle">Découvrez les histoires de réussite de nos étudiants et la force de nos partenariats</p>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="etudiant">Parcours Étudiants</button>
+                <button class="filter-btn" data-filter="partenaire">Partenaires Commerciaux</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item" data-category="etudiant">
+                    <img src="Images/CU12.jpg" alt="Campus Chandigarh University" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Parcours Étudiant</span>
+                        <h3>Un Campus d'Excellence</h3>
+                        <p>Vue du campus de Chandigarh University, offrant un cadre d'étude exceptionnel.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="partenaire">
+                    <img src="Images/COM10.jpg" alt="Future Energy" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Future Energy</h3>
+                        <p>Distribution de batteries tubulaires haute performance.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="etudiant">
+                    <img src="Images/CU1.jpg" alt="Chandigarh University" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Partenariat Universitaire</span>
+                        <h3>Chandigarh University</h3>
+                        <p>Accès à l'université privée n°1 en Inde.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="etudiant">
+                    <img src="Images/CU2.jpg" alt="Bourses d'études" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Parcours Étudiant</span>
+                        <h3>Bourses d'Études</h3>
+                        <p>Nous aidons à postuler pour des bourses jusqu'à 50%.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="partenaire">
+                    <img src="Images/COM11.jpg" alt="Logistique" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Logistique & Export</h3>
+                        <p>Organisation du transport et de l'exportation.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="etudiant">
+                    <img src="Images/CU6.jpg" alt="Étudiants en Inde" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Parcours Étudiant</span>
+                        <h3>Vie étudiante en Inde</h3>
+                        <p>Nous favorisons l'intégration de nos étudiants.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="partenaire">
+                    <img src="Images/COM1.jpg" alt="Taurus Petroleums" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Taurus Petroleums</h3>
+                        <p>Importation de liquides de frein et lubrifiants certifiés.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="partenaire">
+                    <img src="Images/COM6.jpg" alt="Confiseries Al Kamal" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Confiseries Al Kamal</h3>
+                        <p>Export de confiseries variées pour les grossistes.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="etudiant">
+                    <img src="Images/CU8.jpg" alt="Accueil aéroport" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Parcours Étudiant</span>
+                        <h3>Accueil à l'Aéroport</h3>
+                        <p>Un accueil personnalisé dès l'arrivée.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="partenaire">
+                    <img src="Images/COM5.jpg" alt="Lithium Power Energy" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Lithium Power Energy</h3>
+                        <p>Solutions énergétiques et batteries au lithium.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="etudiant">
+                    <img src="Images/CU10.jpg" alt="Découverte locale" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Parcours Étudiant</span>
+                        <h3>Découverte Locale</h3>
+                        <p>L'immersion passe par la découverte de la vie locale.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="partenaire">
+                    <img src="Images/COM12.jpg" alt="Visite d'usine" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Visites d'Usines</h3>
+                        <p>Contrôle qualité chez les producteurs.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="etudiant">
+                    <img src="Images/CU9.jpg" alt="Intégration étudiants" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Parcours Étudiant</span>
+                        <h3>Intégration & Amitiés</h3>
+                        <p>De nouvelles amitiés pour une expérience inoubliable.</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="partenaire">
+                    <img src="Images/COM7.jpg" alt="Lames Swardex" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Lames Swardex</h3>
+                        <p>Exportation de lames de rasoir "Double Edge Platinum".</p>
+                    </div>
+                </div>
+                <div class="gallery-item hidden" data-category="partenaire">
+                    <img src="Images/COM3.jpg" alt="Salons internationaux" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-partner">Partenaire Commercial</span>
+                        <h3>Salons Internationaux</h3>
+                        <p>Renforcer les liens commerciaux.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="etudiant">
+                    <img src="Images/CU11.jpg" alt="Études" class="gallery-image">
+                    <div class="gallery-content">
+                        <span class="gallery-badge badge-student">Parcours Étudiant</span>
+                        <h3>Concentration & Études</h3>
+                        <p>Un environnement propice à la réussite académique.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-controls">
+                <button class="btn btn-primary" id="loadMoreBtn"><span>Voir plus</span></button>
+                <button class="btn btn-secondary hidden" id="reduceBtn"><span>Réduire</span></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section" id="blog">
+        <div class="container">
+            <h2 class="section-title">Actualités & Conseils</h2>
+            <p class="section-subtitle">Restez informés de nos dernières nouvelles et conseils pour étudier à l'étranger</p>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600" alt="Blog" class="blog-image">
+                    <div class="blog-content">
+                        <p class="blog-date">📅 Décembre 2024</p>
+                        <h3>Guide complet pour étudier en Inde</h3>
+                        <p>Découvrez toutes les étapes pour réussir votre inscription dans une université indienne.</p>
+                        <a href="#contact" class="blog-link">Contactez-nous pour en savoir plus →</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600" alt="Blog" class="blog-image">
+                    <div class="blog-content">
+                        <p class="blog-date">📅 Novembre 2024</p>
+                        <h3>Bourses d'études disponibles</h3>
+                        <p>Liste des bourses jusqu'à 50% pour les étudiants internationaux en 2025.</p>
+                        <a href="#contact" class="blog-link">Contactez-nous pour en savoir plus →</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600" alt="Blog" class="blog-image">
+                    <div class="blog-content">
+                        <p class="blog-date">📅 Novembre 2024</p>
+                        <h3>Visa étudiant : démarches simplifiées</h3>
+                        <p>Tout ce qu'il faut savoir sur l'obtention de votre visa étudiant pour l'Inde.</p>
+                        <a href="#contact" class="blog-link">Contactez-nous pour en savoir plus →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <h2 class="section-title">Questions Fréquentes</h2>
+            <p class="section-subtitle">Trouvez rapidement les réponses à vos questions</p>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quels sont les délais pour obtenir un visa étudiant ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Le délai moyen pour obtenir un visa étudiant pour l'Inde est de 2 à 4 semaines. Nous vous accompagnons dans toutes les démarches pour accélérer le processus.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quelles bourses sont disponibles pour les étudiants maliens ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Nous vous aidons à postuler pour des bourses allant de 25% à 50% selon votre profil académique. Chandigarh University offre des bourses au mérite pour les étudiants internationaux.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Proposez-vous un service d'accueil à l'arrivée ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Oui ! Nous organisons votre accueil à l'aéroport, votre transport vers le campus et votre installation dans votre logement. Un membre de notre équipe vous accompagne pendant vos premiers jours.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Combien coûte le coût de la vie en Inde pour un étudiant ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Le coût de la vie en Inde est très abordable. Comptez environ 200-300€ par mois pour le logement, la nourriture et les transports. Les frais universitaires varient selon le programme choisi.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Puis-je travailler pendant mes études en Inde ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Les étudiants internationaux peuvent travailler à temps partiel sur le campus après 6 mois d'études. Nous vous guidons sur les réglementations et opportunités disponibles.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <p class="section-subtitle">Nous sommes à votre écoute pour répondre à toutes vos questions</p>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Coordonnées</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <p><strong>Inde:</strong> (+91) 98-88-40-20-03</p>
+                            <p><strong>Mali:</strong> (+223) 71-40-40-51</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div>
+                            <p>mandemultiservices6@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 2rem;">Réseaux sociaux</h3>
+                    <div class="social-links">
+                        <a href="https://facebook.com" target="_blank" class="social-link facebook" title="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com" target="_blank" class="social-link tiktok" title="TikTok">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/22371404051" target="_blank" class="social-link whatsapp" title="WhatsApp">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="social-link instagram" title="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249089.4718482434!2d-8.093158659103816!3d12.61330960228303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe51d385defd5c63%3A0x847a61d62a088998!2sBamako%2C%20Mali!5e0!3m2!1sfr!2sfr!4v1662061988812!5m2!1sfr!2sfr" width="100%" height="300" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" name="name" required placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service intéressé</label>
+                            <select id="service" name="service">
+                                <option value="">Sélectionnez un service</option>
+                                <option value="etudes">Études à l'étranger</option>
+                                <option value="visa">Visa électronique</option>
+                                <option value="anglais">Apprentissage de l'anglais</option>
+                                <option value="medical">Services médicaux</option>
+                                <option value="commerce">Intermédiation commerciale</option>
+                                <option value="graphisme">Graphisme & Design</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required placeholder="Décrivez votre projet..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="Images/Logo.jpg" alt="Mandé Multi Services">
+                <div class="footer-text">
+                    <h3>Mandé Multi Services</h3>
+                    <p>Votre passerelle internationale</p>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank" class="social-link facebook" title="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="https://tiktok.com" target="_blank" class="social-link tiktok" title="TikTok">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                    </svg>
+                </a>
+                <a href="https://wa.me/22371404051" target="_blank" class="social-link whatsapp" title="WhatsApp">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="social-link instagram" title="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> Mandé Multi Services. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <a href="#accueil" class="scroll-top" id="scrollTop">↑</a>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/22371404051" target="_blank" class="whatsapp-float">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+        </svg>
+    </a>
+
+    <!-- Appointment Float Button -->
+    <div class="appointment-float" id="appointmentFloat" title="Prendre rendez-vous">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/>
+        </svg>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <div class="lightbox-close" id="lightboxClose">×</div>
+            <div class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</div>
+            <img src="" alt="" id="lightboxImg">
+            <div class="lightbox-nav lightbox-next" id="lightboxNext">›</div>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div class="appointment-modal" id="appointmentModal">
+        <div class="appointment-content">
+            <div class="appointment-close" id="appointmentClose">×</div>
+            <h3>📅 Réserver une consultation</h3>
+            <p>Remplissez ce formulaire et nous vous contacterons pour confirmer votre rendez-vous.</p>
+            <form id="appointmentForm" class="appointment-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apptName">Nom complet *</label>
+                        <input type="text" id="apptName" required placeholder="Votre nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="apptPhone">Téléphone *</label>
+                        <input type="tel" id="apptPhone" required placeholder="+223 XX XX XX XX">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="apptEmail">Email *</label>
+                    <input type="email" id="apptEmail" required placeholder="votre@email.com">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apptDate">Date souhaitée *</label>
+                        <input type="date" id="apptDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apptTime">Heure souhaitée *</label>
+                        <input type="time" id="apptTime" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="apptService">Service concerné *</label>
+                    <select id="apptService" required>
+                        <option value="">Sélectionnez un service</option>
+                        <option value="etudes-inde">Études en Inde</option>
+                        <option value="etudes-russie">Études en Russie</option>
+                        <option value="visa">Visa électronique</option>
+                        <option value="medical">Services médicaux</option>
+                        <option value="commerce">Intermédiation commerciale</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="apptMessage">Message (optionnel)</label>
+                    <textarea id="apptMessage" rows="4" placeholder="Décrivez brièvement votre besoin..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Confirmer le rendez-vous</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <div class="toast-content">
+            <h4>Message envoyé !</h4>
+            <p>Nous vous contacterons bientôt.</p>
+        </div>
+        <span class="toast-close" onclick="closeToast()">×</span>
+    </div>
+
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Custom Cursor
+        const cursor = document.getElementById('customCursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .service-card, .gallery-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        });
+
+        // Menu burger
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animated Stats Counter
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.target);
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            entry.target.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            entry.target.textContent = Math.floor(current);
+                        }
+                    }, 30);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-number[data-target]').forEach(stat => {
+            statsObserver.observe(stat);
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+                
+                // Close all
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                });
+
+                // Open clicked if it wasn't active
+                if (!isActive) {
+                    question.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+
+        // Gallery filters
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const reduceBtn = document.getElementById('reduceBtn');
+        let currentFilter = 'all';
+        const itemsPerLoad = 6;
+
+        function getFilteredItems() {
+            return currentFilter === 'all' 
+                ? Array.from(galleryItems)
+                : Array.from(galleryItems).filter(item => item.dataset.category === currentFilter);
+        }
+
+        function updateGallery() {
+            const filtered = getFilteredItems();
+            const visible = filtered.filter(item => !item.classList.contains('hidden'));
+            
+            loadMoreBtn.classList.toggle('hidden', visible.length >= filtered.length);
+            reduceBtn.classList.toggle('hidden', visible.length <= itemsPerLoad);
+        }
+
+        function applyFilter(filter) {
+            currentFilter = filter;
+            const filtered = getFilteredItems();
+            
+            galleryItems.forEach(item => item.classList.add('hidden'));
+            filtered.slice(0, itemsPerLoad).forEach(item => item.classList.remove('hidden'));
+            
+            updateGallery();
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                applyFilter(btn.dataset.filter);
+            });
+        });
+
+        loadMoreBtn.addEventListener('click', () => {
+            const filtered = getFilteredItems();
+            const hidden = filtered.filter(item => item.classList.contains('hidden'));
+            hidden.slice(0, itemsPerLoad).forEach(item => item.classList.remove('hidden'));
+            updateGallery();
+        });
+
+        reduceBtn.addEventListener('click', () => {
+            const filtered = getFilteredItems();
+            filtered.forEach((item, index) => {
+                if (index >= itemsPerLoad) item.classList.add('hidden');
+            });
+            document.getElementById('realisations').scrollIntoView({ behavior: 'smooth' });
+            updateGallery();
+        });
+
+        // Scroll to top button
+        const scrollTop = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        // Toast functions
+        function showToast(title = 'Message envoyé !', message = 'Nous vous contacterons bientôt.', type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastTitle = toast.querySelector('h4');
+            const toastMessage = toast.querySelector('p');
+            const toastIcon = toast.querySelector('.toast-icon');
+            
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            
+            if (type === 'error') {
+                toastIcon.style.background = '#ef4444';
+                toastIcon.textContent = '✕';
+            } else {
+                toastIcon.style.background = '#10b981';
+                toastIcon.textContent = '✓';
+            }
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        function closeToast() {
+            document.getElementById('toast').classList.remove('show');
+        }
+
+        // ========== EMAIL SENDING FUNCTIONS ==========
+        
+        // Configuration EmailJS
+        const EMAIL_CONFIG = {
+            serviceID: 'service_abc123',
+            contactTemplateID: 'template_abc123',
+            appointmentTemplateID: 'template_xyz456',
+            publicKey: 'EG3XgGTvwTJ78tarW'
+        };
+
+        // Fonction pour envoyer un email
+        function sendEmail(templateID, templateParams) {
+            return emailjs.send(
+                EMAIL_CONFIG.serviceID,
+                templateID,
+                templateParams,
+                EMAIL_CONFIG.publicKey
+            );
+        }
+
+        // Form submission - Envoi par EMAIL
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value,
+                to_email: 'mandemultiservices6@gmail.com'
+            };
+            
+            sendEmail(EMAIL_CONFIG.contactTemplateID, templateParams)
+                .then(() => {
+                    showToast('Message envoyé !', 'Nous vous répondrons dans les 24h.');
+                    this.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                })
+                .catch((error) => {
+                    console.error('Erreur:', error);
+                    showToast('Erreur', 'Une erreur est survenue. Essayez WhatsApp.', 'error');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+
+        // Year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Initialize gallery
+        applyFilter('all');
+
+        // Animation d'entrée pour les sections au scroll
+        const fadeElements = document.querySelectorAll('.service-card, .testimonial-card, .blog-card, .faq-item');
+        
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in', 'visible');
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        fadeElements.forEach(el => {
+            el.classList.add('fade-in');
+            fadeObserver.observe(el);
+        });
+
+        // Amélioration de la navigation mobile
+        document.addEventListener('click', (e) => {
+            if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // ========== APPOINTMENT FLOAT BUTTON ==========
+        const appointmentFloat = document.getElementById('appointmentFloat');
+        
+        appointmentFloat.addEventListener('click', () => {
+            appointmentModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // ========== LIGHTBOX ==========
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        
+        let currentImageIndex = 0;
+        let galleryImages = [];
+
+        document.querySelectorAll('.gallery-image').forEach((img, index) => {
+            galleryImages.push({
+                src: img.src,
+                alt: img.alt,
+                title: img.closest('.gallery-item').querySelector('h3').textContent
+            });
+            
+            img.addEventListener('click', () => {
+                currentImageIndex = index;
+                openLightbox();
+            });
+        });
+
+        function openLightbox() {
+            const image = galleryImages[currentImageIndex];
+            lightboxImg.src = image.src;
+            lightboxImg.alt = image.alt;
+            lightboxCaption.textContent = image.title;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            openLightbox();
+        }
+
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            openLightbox();
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxNext.addEventListener('click', showNextImage);
+        lightboxPrev.addEventListener('click', showPrevImage);
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') showNextImage();
+            if (e.key === 'ArrowLeft') showPrevImage();
+        });
+
+        // ========== APPOINTMENT MODAL ==========
+        const appointmentModal = document.getElementById('appointmentModal');
+        const appointmentClose = document.getElementById('appointmentClose');
+        const appointmentForm = document.getElementById('appointmentForm');
+
+        // Bouton "Prendre rendez-vous" dans le hero
+        document.querySelectorAll('a[href="#contact"]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (btn.textContent.includes('contacter')) {
+                    e.preventDefault();
+                    appointmentModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        appointmentClose.addEventListener('click', () => {
+            appointmentModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        appointmentModal.addEventListener('click', (e) => {
+            if (e.target === appointmentModal) {
+                appointmentModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        appointmentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const submitBtn = appointmentForm.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            const templateParams = {
+                from_name: document.getElementById('apptName').value,
+                phone: document.getElementById('apptPhone').value,
+                from_email: document.getElementById('apptEmail').value,
+                date: document.getElementById('apptDate').value,
+                time: document.getElementById('apptTime').value,
+                service: document.getElementById('apptService').value,
+                message: document.getElementById('apptMessage').value || 'Aucun message',
+                to_email: 'mandemultiservices6@gmail.com'
+            };
+            
+            sendEmail(EMAIL_CONFIG.appointmentTemplateID, templateParams)
+                .then(() => {
+                    showToast('Rendez-vous demandé !', 'Nous vous contacterons rapidement.');
+                    appointmentModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    appointmentForm.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                })
+                .catch((error) => {
+                    console.error('Erreur:', error);
+                    showToast('Erreur', 'Une erreur est survenue. Essayez WhatsApp.', 'error');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+
+        // Définir la date minimum à aujourd'hui
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('apptDate').setAttribute('min', today);
+    </script>
+</body>
+</html>
